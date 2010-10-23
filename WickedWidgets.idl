@@ -1,0 +1,239 @@
+// WickedWidgets.idl : IDL source for WickedWidgets.dll
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (WickedWidgets.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+#include "olectl.h"
+	
+
+[
+	uuid(A9D37DEE-0DC6-4184-B7F6-B620C6C6FE10),
+	version(1.0),
+	helpstring("WickedWidgets Component Library")
+]
+library WICKEDWIDGETSLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+	
+	typedef enum tagSliderOrientation
+	{
+		Vertical = 0,
+		Horizontal
+	} enumSliderOrientation;
+	
+	typedef enum tagBitmapDigitFormat
+	{
+		Alphabets = 0,
+		Numbers
+	} enumBitmapDigitFormat;
+
+	[
+		object,
+		uuid(919CD83E-8C26-4225-82FA-155271A83FD9),
+		dual,
+		helpstring("ISlider Interface"),
+		pointer_default(unique)
+	]
+	interface ISlider : IDispatch
+	{
+		const int DISPID_SLIDERMAX  = 1;
+		const int DISPID_SLIDERMIN  = 2;
+		const int DISPID_SLIDERVALUE  = 3;
+		const int DISPID_SLIDERENABLED  = 4;
+		const int DISPID_PATHPICTURE  = 5;
+		const int DISPID_BALLPICTURE  = 6;
+		const int DISPID_BALLPICTUREPRESSED  = 7;
+		const int DISPID_TRANSPARENTCLR  = 8;
+		 
+		[propget, id(DISPID_SLIDERMAX), helpstring("property Max")] HRESULT Max([out, retval] long *pVal);
+		[propput, id(DISPID_SLIDERMAX), helpstring("property Max")] HRESULT Max([in] long newVal);
+
+		[propget, id(DISPID_SLIDERMIN), helpstring("property Min")] HRESULT Min([out, retval] long *pVal);
+		[propput, id(DISPID_SLIDERMIN), helpstring("property Min")] HRESULT Min([in] long newVal);
+
+		[propget, id(DISPID_SLIDERVALUE), helpstring("property Value")] HRESULT Value([out, retval] long *pVal);
+		[propput, id(DISPID_SLIDERVALUE), helpstring("property Value")] HRESULT Value([in] long newVal);
+
+		[propget, id(DISPID_SLIDERENABLED), helpstring("property Enabled")] HRESULT Enabled([out, retval] VARIANT_BOOL *pVal);
+		[propput, id(DISPID_SLIDERENABLED), helpstring("property Enabled")] HRESULT Enabled([in] VARIANT_BOOL newVal);
+		
+		[propget, id(DISPID_PATHPICTURE), helpstring("property PathPicture"), bindable, requestedit] HRESULT PathPicture([out, retval] IPictureDisp* *pVal);
+		[propput, id(DISPID_PATHPICTURE), helpstring("property PathPicture"), bindable, requestedit] HRESULT PathPicture([in] IPictureDisp* newVal);
+		[propputref, id(DISPID_PATHPICTURE), helpstring("property PathPicture"), bindable, requestedit] HRESULT PathPicture([in] IPictureDisp* newVal);
+
+	    [propget, id(DISPID_BALLPICTURE), helpstring("property BallPicture"), bindable, requestedit] HRESULT BallPicture([out, retval] IPictureDisp* *pVal);
+		[propput, id(DISPID_BALLPICTURE), helpstring("property BallPicture"), bindable, requestedit] HRESULT BallPicture([in] IPictureDisp* newVal);
+		[propputref, id(DISPID_BALLPICTURE), helpstring("property BallPicture"), bindable, requestedit] HRESULT BallPicture([in] IPictureDisp* newVal);
+
+		[propget, id(DISPID_BALLPICTUREPRESSED), helpstring("property BallPicturePressed"), bindable, requestedit] HRESULT BallPicturePressed([out, retval] IPictureDisp* *pVal);
+		[propput, id(DISPID_BALLPICTUREPRESSED), helpstring("property BallPicturePressed"), bindable, requestedit] HRESULT BallPicturePressed([in] IPictureDisp* newVal);
+		[propputref, id(DISPID_BALLPICTUREPRESSED), helpstring("property BallPicturePressed"), bindable, requestedit] HRESULT BallPicturePressed([in] IPictureDisp* newVal);
+		
+		[propget, id(DISPID_TRANSPARENTCLR), helpstring("property TransparentColor")] HRESULT TransparentColor([out, retval] OLE_COLOR *pVal);
+		[propput, id(DISPID_TRANSPARENTCLR), helpstring("property TransparentColor")] HRESULT TransparentColor([in] OLE_COLOR newVal);
+	};
+
+	[
+		uuid(2E21633E-ABCF-4721-8D24-FB91E078B900),
+		helpstring("_ISliderEvents Interface")
+	]
+	dispinterface _ISliderEvents
+	{
+		properties:
+		methods:
+		[id(1), helpstring("method Click")] HRESULT Click();
+		[id(2), helpstring("method Change")] HRESULT Change();
+	};
+	
+
+	[
+		object,
+		uuid(A25C9525-B0F6-4592-9EC3-7E2546BB104F),
+		dual,
+		helpstring("ILabel Interface"),
+		pointer_default(unique)
+	]
+	interface ILabel : IDispatch
+	{
+		const int DISPID_LABCAPTION  = 2;
+		const int DISPID_DIGITFORMAT = 1;
+
+		[propget, id(DISPID_DIGITFORMAT), helpstring("property BitmapDigitFormat")] HRESULT BitmapDigitFormat([out, retval] enumBitmapDigitFormat *pVal);
+		[propput, id(DISPID_DIGITFORMAT), helpstring("property BitmapDigitFormat")] HRESULT BitmapDigitFormat([in] enumBitmapDigitFormat newVal);
+		[propget, id(DISPID_LABCAPTION), helpstring("property Caption")] HRESULT Caption([out, retval] BSTR *pVal);
+		[propput, id(DISPID_LABCAPTION), helpstring("property Caption")] HRESULT Caption([in] BSTR newVal);
+	};
+
+	[
+		uuid(0786F8E0-B105-4325-B937-6ABC696CC84E),
+		helpstring("Slider Control")
+	]
+	coclass Slider
+	{
+		[default] interface ISlider;
+		[default, source] dispinterface _ISliderEvents;
+	};
+	[
+		uuid(B5A91EC1-54BE-4D9A-99BC-6712E0C9962D),
+		helpstring("_ILabelEvents Interface")
+	]
+	dispinterface _ILabelEvents
+	{
+		properties:
+		methods:
+	};
+	
+
+	[
+		object,
+		uuid(6B4C25EA-25C9-4EA9-8579-CE47738D68DC),
+		dual,
+		helpstring("IBitmapButton Interface"),
+		pointer_default(unique)
+	]
+	interface IBitmapButton : IDispatch
+	{
+		const int DISPID_BPICTURE = 1;
+		const int DISPID_BUTTONHEIGHT = 2;
+		const int DISPID_BUTTONWIDTH = 3;
+		const int DISPID_BUTTONCOUNT = 4;
+		const int DISPID_HASHOVER = 5;
+		const int DISPID_LEFTOFFSET = 6;
+		const int DISPID_ISTOGGLE = 7;
+
+		[propget, id(DISPID_BPICTURE), helpstring("property Picture"), bindable, requestedit ] HRESULT Picture([out, retval] IPictureDisp **pVal);
+		[propputref, id(DISPID_BPICTURE), helpstring("property Picture"), bindable, requestedit] HRESULT Picture([in] IPictureDisp* newVal);
+		[propput, id(DISPID_BPICTURE), helpstring("property Picture"), bindable, requestedit] HRESULT Picture([in] IPictureDisp* newVal);
+		[propget, id(DISPID_BUTTONHEIGHT), helpstring("property ButtonHeight")] HRESULT ButtonHeight([out, retval] long *pVal);
+		[propput, id(DISPID_BUTTONHEIGHT), helpstring("property ButtonHeight")] HRESULT ButtonHeight([in] long newVal);
+		[propget, id(DISPID_BUTTONWIDTH), helpstring("property ButtonWidth")] HRESULT ButtonWidth([out, retval] long *pVal);
+		[propput, id(DISPID_BUTTONWIDTH), helpstring("property ButtonWidth")] HRESULT ButtonWidth([in] long newVal);
+		[propget, id(DISPID_BUTTONCOUNT), helpstring("property ButtonCount")] HRESULT ButtonCount([out, retval] long *pVal);
+		[propput, id(DISPID_BUTTONCOUNT), helpstring("property ButtonCount")] HRESULT ButtonCount([in] long newVal);
+		[propget, id(DISPID_HASHOVER), helpstring("property HasHover")] HRESULT HasHover([out, retval] VARIANT_BOOL *pVal);
+		[propput, id(DISPID_HASHOVER), helpstring("property HasHover")] HRESULT HasHover([in] VARIANT_BOOL newVal);
+		[propget, id(DISPID_LEFTOFFSET), helpstring("property LeftOffset")] HRESULT LeftOffset([out, retval] long *pVal);
+		[propput, id(DISPID_LEFTOFFSET), helpstring("property LeftOffset")] HRESULT LeftOffset([in] long newVal);	
+		[propget, id(DISPID_ISTOGGLE), helpstring("property ToggleButton")] HRESULT ToggleButton([out, retval] VARIANT_BOOL *pVal);
+		[propput, id(DISPID_ISTOGGLE), helpstring("property ToggleButton")] HRESULT ToggleButton([in] VARIANT_BOOL newVal);
+		[id(8), helpstring("method AddTooltips")] HRESULT AddTooltips([in] BSTR strTips);
+	};
+	
+	[
+		uuid(9169C532-E257-42AD-8090-F004C186D69B),
+		helpstring("Label Class")
+	]
+	coclass Label
+	{
+		[default] interface ILabel;
+		[default, source] dispinterface _ILabelEvents;
+	};
+	[
+		uuid(4AAEF167-CA19-4FEF-B81B-0008190D5CC0),
+		helpstring("_IBitmapButtonEvents Interface")
+	]
+	dispinterface _IBitmapButtonEvents
+	{
+		properties:
+		methods:
+		[id(1), helpstring("method Click")] HRESULT Click([in] long ButtonIndex);
+	};
+	
+
+	[
+		object,
+		uuid(E38DBFF6-D23F-4BC3-8C91-23D346544D00),
+		dual,
+		helpstring("IWindowSkinner Interface"),
+		pointer_default(unique)
+	]
+	interface IWindowSkinner : IDispatch
+	{
+		const int DISPID_TRANSPARENTCOLOR = 1;
+		const int DISPID_BACKPICTURE = 2;
+		const int DISPID_ALLOWDRAGMOVE = 7;
+
+		[propget, id(DISPID_TRANSPARENTCOLOR), helpstring("property TransparentColor")] HRESULT TransparentColor([out, retval] OLE_COLOR *pVal);
+		[propput, id(DISPID_TRANSPARENTCOLOR), helpstring("property TransparentColor")] HRESULT TransparentColor([in] OLE_COLOR newVal);
+		[propget, id(DISPID_BACKPICTURE), helpstring("property Picture")] HRESULT Picture([out, retval] IPictureDisp* *pVal);
+		[propput, id(DISPID_BACKPICTURE), helpstring("property Picture")] HRESULT Picture([in] IPictureDisp* newVal);
+		[propputref, id(DISPID_BACKPICTURE), helpstring("property Picture"), bindable, requestedit] HRESULT Picture([in] IPictureDisp* newVal);
+		[id(3), helpstring("method InfoForResize")] HRESULT InfoForResize([in] long nHorLineTop,[in]  long nHorLineBottom,[in]  long nVerLineLeft,[in]  long nVerLineRight);
+		[id(4), helpstring("method IndicateContainerChanged")] HRESULT IndicateContainerChanged();
+		[id(5), helpstring("method InfoForResizeGrip")] HRESULT InfoForResizeGrip([in] long nLeft, [in] long nTop, [in] long nRight, [in] long nBottom);
+		[propget, id(6), helpstring("property Dragging")] HRESULT Dragging([out, retval] VARIANT_BOOL *pVal);
+		[propget, id(DISPID_ALLOWDRAGMOVE), helpstring("property AllowDragMove")] HRESULT AllowDragMove([out, retval] VARIANT_BOOL *pVal);
+		[propput, id(DISPID_ALLOWDRAGMOVE), helpstring("property AllowDragMove")] HRESULT AllowDragMove([in] VARIANT_BOOL newVal);
+		[propput, id(8), helpstring("property ParentHwnd")] HRESULT ParentHwnd([in] long newVal);
+		[propget, id(9), helpstring("property MinimumHeight")] HRESULT MinimumHeight([out, retval] long *pVal);
+		[propget, id(10), helpstring("property MinimumWidth")] HRESULT MinimumWidth([out, retval] long *pVal);
+		[id(11), helpstring("method GetRgnBox")] HRESULT GetRgnBox([out] long * pLeft, [out] long * pTop, [out] long * pWidth, [out] long* pHeight);
+		[propget, id(12), helpstring("property BitmapDrawOffsetX")] HRESULT BitmapDrawOffsetX([out, retval] long *pVal);
+		[propput, id(12), helpstring("property BitmapDrawOffsetX")] HRESULT BitmapDrawOffsetX([in] long newVal);
+		[propget, id(13), helpstring("property BitmapDrawOffsetY")] HRESULT BitmapDrawOffsetY([out, retval] long *pVal);
+		[propput, id(13), helpstring("property BitmapDrawOffsetY")] HRESULT BitmapDrawOffsetY([in] long newVal);
+		[propget, id(14), helpstring("property Resizing")] HRESULT Resizing([out, retval] VARIANT_BOOL *pVal);
+	};
+
+	[
+		uuid(F00E1EF5-83A8-4DAC-B99E-82AE138EA959),
+		helpstring("BitmapButton Class")
+	]
+	coclass BitmapButtonBar
+	{
+		[default] interface IBitmapButton;
+		[default, source] dispinterface _IBitmapButtonEvents;
+	};
+	[
+		uuid(F4D720E4-AF5D-431A-8E14-44496792F0FB),
+		helpstring("WindowSkinner Class")
+	]
+	coclass WindowSkinner
+	{
+		[default] interface IWindowSkinner;
+	};
+};

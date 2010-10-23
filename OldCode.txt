@@ -1,0 +1,66 @@
+  int nRightRectsStart = nCurrentWidth - (m_nPicWidth - m_rcResizeLines.right);
+
+        // The region we will put everything in
+        HRGN hrgnCombined = CreateRectRgn(nNcOffsetLeft, nNcOffsetTop,
+                                          nCurrentWidth, nCurrentHeight);
+        
+        // a rectangle that represents the upper left corner
+        HRGN hrgnLeftTop = CreateRectRgn(nNcOffsetLeft, 
+                                         nNcOffsetTop, 
+                                         m_rcResizeLines.left,
+                                         m_rcResizeLines.top);
+
+        // We combine the upper left rectangle with our original shape,
+        // meaning we have the upper left curves
+        int res = ::CombineRgn(hrgnLeftTop, hrgnLeftTop, m_hrgnBaseCopy, RGN_AND);
+        _ASSERT(res != ERROR);
+        
+        // Create a rectangle for the space by which we have resized
+        HRGN hrgnLeftRightRect = CreateRectRgn(m_rcResizeLines.left,
+                                               nNcOffsetTop,
+                                               nRightRectsStart,
+                                               m_rcResizeLines.top);
+        
+        // Combine the upper left side with our resize rectangle
+        res = ::CombineRgn(hrgnLeftTop, hrgnLeftTop, hrgnLeftRightRect, RGN_OR);
+        _ASSERT(res != ERROR);
+
+        // upper right rectnalge
+        HRGN hrgnRightTop = CreateRectRgn(nRightRectsStart, 
+                                         nNcOffsetTop, 
+                                         nCurrentWidth,
+                                         m_rcResizeLines.top);
+        // upper right with curves
+        res = ::CombineRgn(hrgnRightTop, hrgnRightTop, m_hrgnBaseCopy, RGN_AND);
+        _ASSERT(res != ERROR);
+        
+        // combine upper right with the union of the other two above
+        res = ::CombineRgn(hrgnLeftTop, hrgnLeftTop, hrgnRightTop, RGN_OR);
+        _ASSERT(res != ERROR);
+
+        HRGN hrgnLeftBottom = CreateRectRgn(nNcOffsetLeft, 
+                                         m_rcResizeLines.bottom, 
+                                         m_rcResizeLines.left,
+                                         nCurrentHeight);
+
+        HRGN hrgnRightBottom = CreateRectRgn(m_rcResizeLines.right, 
+                                         m_rcResizeLines.bottom, 
+                                         nCurrentWidth,
+                                         nCurrentHeight);
+        
+
+        // combine all regions to one large region
+     //    res = ::CombineRgn(hrgnCombined, hrgnCombined, hrgnRightTop, RGN_AND);
+      //  _ASSERT(res != ERROR);
+       // res = ::CombineRgn(hrgnCombined, hrgnCombined, hrgnLeftTop, RGN_AND);
+       // _ASSERT(res != ERROR);
+
+
+        ::SetWindowRgn(m_hwndParent, hrgnLeftTop, TRUE);
+
+        DeleteObject(hrgnLeftTop);
+        DeleteObject(hrgnRightTop);
+        DeleteObject(hrgnLeftBottom);
+        DeleteObject(hrgnRightBottom);
+        DeleteObject(hrgnCombined);
+        DeleteObject(hrgnLeftRightRect);

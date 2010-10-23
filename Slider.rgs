@@ -1,0 +1,34 @@
+HKCR
+{
+	WickedWidgets.Slider.1 = s 'Slider Class'
+	{
+		CLSID = s '{0786F8E0-B105-4325-B937-6ABC696CC84E}'
+	}
+	WickedWidgets.Slider = s 'Slider Class'
+	{
+		CLSID = s '{0786F8E0-B105-4325-B937-6ABC696CC84E}'
+		CurVer = s 'WickedWidgets.Slider.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {0786F8E0-B105-4325-B937-6ABC696CC84E} = s 'Slider Class'
+		{
+			ProgID = s 'WickedWidgets.Slider.1'
+			VersionIndependentProgID = s 'WickedWidgets.Slider'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			ForceRemove 'Control'
+			ForceRemove 'Insertable'
+			ForceRemove 'ToolboxBitmap32' = s '%MODULE%, 101'
+			'MiscStatus' = s '0'
+			{
+			    '1' = s '131473'
+			}
+			'TypeLib' = s '{A9D37DEE-0DC6-4184-B7F6-B620C6C6FE10}'
+			'Version' = s '1.0'
+		}
+	}
+}
